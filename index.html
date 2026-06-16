@@ -176,25 +176,27 @@
   </section>
 
   <!-- Packages teaser -->
-  <section style="max-width:1240px;margin:0 auto;padding:clamp(64px,9vw,128px) clamp(20px,5vw,40px)">
-   <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:clamp(36px,4vw,52px);max-width:680px">
-    <span style="{{ eyebrowDark }};align-self:flex-start">Packages</span>
-    <h2 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(30px,4.4vw,56px);line-height:1.0;letter-spacing:-.03em">One simple price. Everything bundled.</h2>
-    <p style="margin:0;color:#A7ACC4;font-size:clamp(16px,1.5vw,18px);line-height:1.7">Logo, branding, and website support together — so you launch with a complete professional presence, and save versus booking each service separately.</p>
+  <section style="background:radial-gradient(70% 120% at 0% 0%,rgba(240,101,42,.09),transparent 46%),#F3F0E9;color:#14130E">
+   <div style="max-width:1240px;margin:0 auto;padding:clamp(64px,9vw,128px) clamp(20px,5vw,40px)">
+    <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:clamp(36px,4vw,52px);max-width:680px">
+     <span style="{{ eyebrowCream }};align-self:flex-start">Packages</span>
+     <h2 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(30px,4.4vw,56px);line-height:1.0;letter-spacing:-.03em;color:#14130E">One simple price. Everything bundled.</h2>
+     <p style="margin:0;color:#5C5848;font-size:clamp(16px,1.5vw,18px);line-height:1.7">Logo, branding, and website support together — so you launch with a complete professional presence, and save versus booking each service separately.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:20px">
+     <sc-for list="{{ homePackages }}" as="pk" hint-placeholder-count="2">
+      <div style="{{ pk.cardStyle }}">
+       <sc-if value="{{ pk.popular }}" hint-placeholder-val="{{ false }}"><span style="{{ popularBadge }}">Most popular</span></sc-if>
+       <h3 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:24px;letter-spacing:-.01em;color:{{ pk.ink }}">{{ pk.name }}</h3>
+       <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(40px,5vw,52px);letter-spacing:-.03em;color:{{ pk.ink }}">{{ pk.price }}</span>
+       <span style="font-size:14.5px;font-weight:600;color:{{ pk.accent }}">{{ pk.incl }}</span>
+       <p style="margin:0;color:{{ pk.muted }};font-size:14.5px;line-height:1.6">{{ pk.d }}</p>
+       <a onClick="{{ goContact }}" style="{{ pk.btn }}">Start your project</a>
+      </div>
+     </sc-for>
+    </div>
+    <div style="margin-top:30px"><a onClick="{{ goServices }}" style="{{ btnGhostCream }}">View all packages →</a></div>
    </div>
-   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:20px">
-    <sc-for list="{{ homePackages }}" as="pk" hint-placeholder-count="2">
-     <div style="{{ pk.cardStyle }}">
-      <sc-if value="{{ pk.popular }}" hint-placeholder-val="{{ false }}"><span style="{{ popularBadge }}">Most popular</span></sc-if>
-      <h3 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:24px;letter-spacing:-.01em;color:{{ pk.ink }}">{{ pk.name }}</h3>
-      <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(40px,5vw,52px);letter-spacing:-.03em;color:{{ pk.ink }}">{{ pk.price }}</span>
-      <span style="font-size:14.5px;font-weight:600;color:{{ pk.accent }}">{{ pk.incl }}</span>
-      <p style="margin:0;color:{{ pk.muted }};font-size:14.5px;line-height:1.6">{{ pk.d }}</p>
-      <a onClick="{{ goContact }}" style="{{ pk.btn }}">Start your project</a>
-     </div>
-    </sc-for>
-   </div>
-   <div style="margin-top:30px"><a onClick="{{ goServices }}" style="{{ btnGhostDark }}">View all packages →</a></div>
   </section>
 
   <!-- Final CTA — full bleed image -->
@@ -676,7 +678,7 @@ class Component extends DCLogic {
     const btnGhostCream = `display:inline-block;padding:13px 24px;border-radius:99px;border:1px solid rgba(20,18,12,.24);color:#14130E;font-weight:600;font-size:15px;text-decoration:none;cursor:pointer;white-space:nowrap`;
     const navCta = `padding:11px 22px;border-radius:99px;background:${A};color:#0B0E1C;font-weight:700;font-size:14px;text-decoration:none;white-space:nowrap;cursor:pointer`;
     const tickBadge = `flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:${A};background:${this.hexA(A,.14)};border:1px solid ${this.hexA(A,.4)}`;
-    const popularBadge = `align-self:flex-start;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#0B0E1C;background:${A};padding:6px 13px;border-radius:99px`;
+    const popularBadge = `align-self:flex-start;white-space:nowrap;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#0B0E1C;background:${A};padding:6px 13px;border-radius:99px`;
     const inputStyle = `width:100%;padding:13px 15px;border-radius:12px;border:1px solid rgba(243,240,233,.16);background:rgba(243,240,233,.04);font-family:'Hanken Grotesk',sans-serif;font-size:15px;font-weight:500;color:#F3F0E9;outline:none;transition:border-color .2s`;
     const footLink = `background:none;border:none;text-align:left;padding:0;cursor:pointer;color:#A7ACC4;font-family:'Hanken Grotesk',sans-serif;font-size:14.5px;font-weight:500;transition:color .2s`;
 
@@ -695,7 +697,7 @@ class Component extends DCLogic {
       strike: popular?'rgba(247,244,237,.5)':'#A39D8E',
       btn:`margin-top:auto;text-align:center;padding:14px;border-radius:13px;background:${popular?A:'#14130E'};color:${popular?'#0B0E1C':'#F7F4ED'};font-weight:700;font-size:14.5px;text-decoration:none;cursor:pointer`,
     });
-    const homePackages = this.homePackages.map(p => ({ ...p, ...creamCardDark(p.popular, A, this) }));
+    const homePackages = this.homePackages.map(p => ({ ...p, ...creamCard(p.popular) }));
     const packages = this.packages.map(p => ({ ...p, ...creamCard(p.popular) }));
     function creamCardDark(popular, A, self){
       // home packages sit on DARK bg
