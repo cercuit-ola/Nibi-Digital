@@ -21,9 +21,28 @@
   @keyframes kenburns{from{transform:scale(1.04)}to{transform:scale(1.16)}}
   @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
   @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+  @keyframes pulseDot{0%{box-shadow:0 0 0 0 rgba(95,210,140,.5)}70%{box-shadow:0 0 0 9px rgba(95,210,140,0)}100%{box-shadow:0 0 0 0 rgba(95,210,140,0)}}
+  @keyframes floaty{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-14px) rotate(3deg)}}
+  @keyframes spinSlow{to{transform:rotate(360deg)}}
+
+  /* ── Signature scroll-reveal (CSS scroll-timeline; degrades to instant) ── */
+  .reveal{animation:revealUp both;animation-timeline:view();animation-range:entry 4% cover 20%}
+  .reveal-d{animation:revealUp both;animation-timeline:view();animation-range:entry 2% cover 26%}
+  @keyframes revealUp{from{opacity:0;transform:translateY(38px)}to{opacity:1;transform:none}}
+  .reveal-l{animation:revealL both;animation-timeline:view();animation-range:entry 2% cover 24%}
+  @keyframes revealL{from{opacity:0;transform:translateX(-44px)}to{opacity:1;transform:none}}
+  .reveal-r{animation:revealR both;animation-timeline:view();animation-range:entry 2% cover 24%}
+  @keyframes revealR{from{opacity:0;transform:translateX(44px)}to{opacity:1;transform:none}}
+  .clip-rise{animation:clipRise both;animation-timeline:view();animation-range:entry 0% cover 24%}
+  @keyframes clipRise{from{clip-path:inset(48% 0 0 0);transform:scale(1.06)}to{clip-path:inset(0 0 0 0);transform:none}}
+
+  /* ── stat numbers reveal via .reveal; static values ── */
+
+  .lift{transition:transform .5s cubic-bezier(.22,1,.36,1),box-shadow .5s cubic-bezier(.22,1,.36,1),border-color .4s}
   .nav-links{display:flex;align-items:center;gap:4px}
   .nav-burger{display:none}
   .mq:hover .mq-track{animation-play-state:paused}
+  @media(prefers-reduced-motion:reduce){.reveal,.reveal-d,.reveal-l,.reveal-r,.clip-rise{animation:none!important}}
   @media(max-width:940px){
     .nav-links{display:none}
     .nav-cta-desktop{display:none}
@@ -38,13 +57,16 @@
  <nav style="position:sticky;top:0;z-index:60;backdrop-filter:blur(18px);background:rgba(8,27,58,.72);border-bottom:1px solid rgba(247,244,238,.08)">
   <div style="max-width:1240px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px clamp(18px,5vw,40px)">
    <div onClick="{{ goHome }}" style="display:flex;align-items:center;gap:11px;cursor:pointer">
-    <svg width="36" height="36" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;flex:none">
-     <rect width="40" height="40" rx="11" fill="#4FB4F2"></rect>
-     <path d="M11.5 11 L15.5 11 L28.5 29 L24.5 29 Z" fill="#0E4368"></path>
-     <rect x="11.5" y="11" width="4" height="18" rx="2" fill="#081B3A"></rect>
-     <rect x="24.5" y="11" width="4" height="18" rx="2" fill="#081B3A"></rect>
+    <svg width="36" height="36" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;flex:none">
+     <defs>
+      <linearGradient id="navLeg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86CFF8"></stop><stop offset="1" stop-color="#15518C"></stop></linearGradient>
+      <linearGradient id="navDiag" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2E84C8"></stop><stop offset="1" stop-color="#0C2F55"></stop></linearGradient>
+     </defs>
+     <path d="M18,34 L40,22 L40,52 L30,58 L40,64 L40,96 L18,84 Z" fill="url(#navLeg)"></path>
+     <path d="M30,58 L40,52 L100,22 L100,52 L40,82 Z" fill="url(#navDiag)"></path>
+     <path d="M82,30 L100,22 L100,90 L82,98 Z" fill="url(#navLeg)"></path>
     </svg>
-    <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:21px;letter-spacing:-.02em;color:#F7F4EE">Nibi Digital</span>
+    <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:21px;letter-spacing:-.02em;color:#F7F4EE">Nibi <span style="font-weight:500;color:#9BA6BD">digital</span></span>
    </div>
    <div class="nav-links">
     <button onClick="{{ goHome }}" style="{{ navHomeS }}">Home</button>
@@ -77,20 +99,45 @@
  <div data-screen-label="Home">
 
   <!-- Hero -->
-  <header style="position:relative;overflow:hidden;min-height:clamp(620px,92vh,920px);display:flex;align-items:flex-end">
+  <header style="position:relative;overflow:hidden;min-height:clamp(540px,74vh,720px);display:flex;align-items:flex-end">
    <div style="position:absolute;inset:0;z-index:0">
     <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1700&q=80" alt="Young creative team collaborating with laptops at Nibi Digital" style="width:100%;height:100%;object-fit:cover;animation:kenburns 22s ease-out forwards">
    </div>
-   <div style="position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(8,27,58,.62) 0%,rgba(8,27,58,.46) 30%,rgba(8,27,58,.82) 78%,#081B3A 100%)"></div>
-   <div style="position:absolute;inset:0;z-index:1;background:radial-gradient(120% 80% at 12% 110%,rgba(79,180,242,.28),transparent 55%)"></div>
+   <div style="position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(8,27,58,.58) 0%,rgba(8,27,58,.42) 26%,rgba(8,27,58,.84) 76%,#081B3A 100%)"></div>
+   <div style="position:absolute;inset:0;z-index:1;background:radial-gradient(120% 80% at 10% 112%,rgba(79,180,242,.32),transparent 56%)"></div>
+   <!-- floating signature accent -->
+   <div style="position:absolute;z-index:2;top:clamp(80px,12vw,140px);right:clamp(20px,6vw,90px);width:clamp(64px,9vw,104px);height:clamp(64px,9vw,104px);animation:floaty 7s ease-in-out infinite;pointer-events:none">
+    <svg viewBox="0 0 100 100" width="100%" height="100%" fill="none"><path d="M50 4 C54 34 66 46 96 50 C66 54 54 66 50 96 C46 66 34 54 4 50 C34 46 46 34 50 4Z" fill="#4FB4F2" opacity=".92"></path></svg>
+   </div>
 
-   <div style="position:relative;z-index:2;width:100%;max-width:1240px;margin:0 auto;padding:clamp(40px,9vw,120px) clamp(20px,5vw,40px) clamp(36px,5vw,64px)">
-    <div style="max-width:920px">
-     <span style="{{ eyebrowDark }};animation:riseIn .7s .05s both">Logo · Branding · Website, handled</span>
-     <h1 style="margin:18px 0 0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(42px,7.4vw,104px);line-height:.96;letter-spacing:-.035em;text-wrap:balance;animation:riseIn .8s .12s both">Look like the<br>business you're <span style="font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:#4FB4F2">actually</span> building.</h1>
-     <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:34px;animation:riseIn .8s .32s both">
+   <div style="position:relative;z-index:2;width:100%;max-width:1240px;margin:0 auto;padding:clamp(34px,7vw,76px) clamp(20px,5vw,40px) clamp(30px,4vw,52px)">
+    <!-- availability badge -->
+    <div style="display:inline-flex;align-items:center;gap:9px;padding:8px 15px 8px 12px;border-radius:99px;background:rgba(8,27,58,.5);border:1px solid rgba(247,244,238,.16);backdrop-filter:blur(8px);margin-bottom:22px;animation:riseIn .7s both">
+     <span style="width:8px;height:8px;border-radius:50%;background:#5FD28C;animation:pulseDot 2.4s infinite"></span>
+     <span style="font-size:12.5px;font-weight:600;letter-spacing:.04em;color:#E9E5DB">Now booking — 2 project slots open this month</span>
+    </div>
+    <div style="max-width:980px">
+     <span style="{{ eyebrowDark }};animation:riseIn .7s .05s both"><span style="opacity:.6">(01)</span> &nbsp;Logo · Branding · Website, handled</span>
+     <h1 style="margin:14px 0 0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(40px,6.6vw,92px);line-height:.95;letter-spacing:-.035em;text-wrap:balance;animation:riseIn .8s .12s both">Look like the business you're <span style="font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:#4FB4F2">actually</span> building.</h1>
+     <p style="margin:18px 0 0;max-width:540px;color:#C2CCDD;font-size:clamp(15px,1.6vw,19px);line-height:1.6;animation:riseIn .8s .22s both">A boutique digital studio that gives small businesses a logo, brand, and website worth trusting — launched in about two weeks, not two months.</p>
+     <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:28px;animation:riseIn .8s .32s both">
       <a onClick="{{ goContact }}" style="{{ btnPrimaryLg }}">Start your project</a>
       <a onClick="{{ goWork }}" style="{{ btnGhostDarkLg }}">See the work</a>
+     </div>
+    </div>
+    <!-- above-fold mini stats -->
+    <div style="display:flex;flex-wrap:wrap;gap:clamp(20px,4vw,54px);margin-top:clamp(30px,4vw,48px);padding-top:24px;border-top:1px solid rgba(247,244,238,.14);animation:riseIn .8s .42s both">
+     <div style="display:flex;flex-direction:column;gap:2px">
+      <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(26px,3vw,38px);letter-spacing:-.03em;color:#F7F4EE">~14<span style="color:#4FB4F2">-day</span></span>
+      <span style="font-size:13px;font-weight:600;color:#9BA6BD;letter-spacing:.02em">avg. launch turnaround</span>
+     </div>
+     <div style="display:flex;flex-direction:column;gap:2px">
+      <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(26px,3vw,38px);letter-spacing:-.03em;color:#F7F4EE">$699</span>
+      <span style="font-size:13px;font-weight:600;color:#9BA6BD;letter-spacing:.02em">complete launch package</span>
+     </div>
+     <div style="display:flex;flex-direction:column;gap:2px">
+      <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(26px,3vw,38px);letter-spacing:-.03em;color:#F7F4EE">1:1</span>
+      <span style="font-size:13px;font-weight:600;color:#9BA6BD;letter-spacing:.02em">direct with the founder</span>
      </div>
     </div>
    </div>
@@ -108,12 +155,12 @@
 
   <!-- Who it's for -->
   <section style="max-width:1240px;margin:0 auto;padding:clamp(64px,9vw,128px) clamp(20px,5vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(36px,5vw,72px);align-items:start">
-   <div style="display:flex;flex-direction:column;gap:20px">
-    <span style="{{ eyebrowDark }};align-self:flex-start">Who it's for</span>
+   <div class="reveal-l" style="display:flex;flex-direction:column;gap:20px">
+    <span style="{{ eyebrowDark }};align-self:flex-start"><span style="opacity:.6">(02)</span> &nbsp;Who it's for</span>
     <h2 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(30px,4.4vw,56px);line-height:1.02;letter-spacing:-.03em">Built for businesses ready to look the part <span style="font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:#4FB4F2">online.</span></h2>
     <p style="margin:0;max-width:480px;color:#9BA6BD;font-size:clamp(16px,1.5vw,18px);line-height:1.7">We work with entrepreneurs, startups, service providers, and growing businesses that need a strong digital foundation, launching, rebranding, or finally building the website your customers keep asking for.</p>
    </div>
-   <div style="display:flex;flex-direction:column;gap:0;border-top:1px solid rgba(247,244,238,.1)">
+   <div class="reveal-r" style="display:flex;flex-direction:column;gap:0;border-top:1px solid rgba(247,244,238,.1)">
     <sc-for list="{{ greatFit }}" as="g" hint-placeholder-count="5">
      <div style="display:flex;align-items:center;gap:18px;padding:20px 4px;border-bottom:1px solid rgba(247,244,238,.1)">
       <span style="{{ tickBadge }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"></path></svg></span>
@@ -126,14 +173,14 @@
   <!-- Services, editorial numbered list on cream -->
   <section style="background:radial-gradient(70% 120% at 0% 0%,rgba(13,92,63,.12),transparent 46%),#F7F4EE;color:#081B3A">
    <div style="max-width:1240px;margin:0 auto;padding:clamp(64px,9vw,128px) clamp(20px,5vw,40px)">
-    <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:clamp(36px,5vw,64px)">
+    <div class="reveal" style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:clamp(36px,5vw,64px)">
      <div style="max-width:680px;display:flex;flex-direction:column;gap:18px">
-      <span style="{{ eyebrowCream }};align-self:flex-start">What we do</span>
-      <h2 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(30px,4.6vw,60px);line-height:1.0;letter-spacing:-.03em;color:#081B3A">Everything you need to launch, in one place.</h2>
+      <span style="{{ eyebrowCream }};align-self:flex-start"><span style="opacity:.55">(03)</span> &nbsp;What we do</span>
+      <h2 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(30px,4.6vw,60px);line-height:1.0;letter-spacing:-.03em;color:#081B3A">Everything you need to launch, <span style="font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:#0E4368">in one place.</span></h2>
      </div>
      <a onClick="{{ goServices }}" style="{{ btnGhostCream }}">All services →</a>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:clamp(16px,2vw,24px)">
+    <div class="reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:clamp(16px,2vw,24px)">
 
      <div style="background:#FFFFFF;border:1px solid rgba(8,27,58,.07);border-radius:24px;padding:clamp(24px,2.6vw,32px);display:flex;flex-direction:column;gap:16px;box-shadow:0 18px 40px -30px rgba(8,27,58,.5);transition:transform .5s cubic-bezier(.34,1.56,.64,1),box-shadow .5s cubic-bezier(.34,1.56,.64,1)" style-hover="transform:translateY(-12px);box-shadow:0 40px 72px -34px rgba(8,27,58,.55)">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
@@ -189,8 +236,8 @@
 
   <!-- Why us -->
   <section style="max-width:1240px;margin:0 auto;padding:clamp(64px,9vw,128px) clamp(20px,5vw,40px)">
-   <h2 style="margin:0 0 clamp(36px,5vw,56px);font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(28px,4vw,52px);line-height:1.02;letter-spacing:-.03em;max-width:720px">Done right, and done <span style="font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:#4FB4F2">fast.</span></h2>
-   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1px;background:rgba(247,244,238,.1);border:1px solid rgba(247,244,238,.1);border-radius:20px;overflow:hidden">
+   <h2 class="reveal" style="margin:0 0 clamp(36px,5vw,56px);font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(28px,4vw,52px);line-height:1.02;letter-spacing:-.03em;max-width:720px"><span style="{{ eyebrowDark }};margin-bottom:18px"><span style="opacity:.6">(06)</span> &nbsp;Why us</span><br>Done right, and done <span style="font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:#4FB4F2">fast.</span></h2>
+   <div class="reveal-d" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1px;background:rgba(247,244,238,.1);border:1px solid rgba(247,244,238,.1);border-radius:20px;overflow:hidden">
     <sc-for list="{{ whyUs }}" as="w" hint-placeholder-count="5">
      <div style="background:#081B3A;padding:clamp(24px,3vw,34px);display:flex;flex-direction:column;gap:11px;transition:background .3s" style-hover="background:#0F2A4E">
       <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:13px;color:#4FB4F2;letter-spacing:.05em">{{ w.n }}</span>
@@ -201,22 +248,53 @@
    </div>
   </section>
 
-  <!-- Process, horizontal rail -->
+  <!-- Process, connected timeline -->
   <section style="background:radial-gradient(80% 130% at 100% 0%,rgba(79,180,242,.16),transparent 46%),#143158;border-top:1px solid rgba(247,244,238,.12);border-bottom:1px solid rgba(247,244,238,.12)">
    <div style="max-width:1240px;margin:0 auto;padding:clamp(64px,9vw,120px) clamp(20px,5vw,40px)">
-    <span style="{{ eyebrowDark }}">How it works</span>
-    <h2 style="margin:18px 0 clamp(40px,5vw,64px);font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(28px,4.2vw,54px);line-height:1.0;letter-spacing:-.03em;max-width:680px;color:#F7F4EE">A simple path from idea to launch.</h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:clamp(16px,2vw,22px)">
+    <div class="reveal" style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:clamp(44px,5vw,72px)">
+     <div>
+      <span style="{{ eyebrowDark }}"><span style="opacity:.6">(04)</span> &nbsp;How it works</span>
+      <h2 style="margin:16px 0 0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(28px,4.2vw,54px);line-height:1.0;letter-spacing:-.03em;max-width:680px;color:#F7F4EE">A simple path from idea to <span style="font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:#4FB4F2">launch.</span></h2>
+     </div>
+     <span style="font-size:14px;font-weight:600;color:#9BA6BD;max-width:260px;text-align:right">Five clear steps. No agency runaround, no guessing what's next.</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:clamp(20px,3vw,32px)">
      <sc-for list="{{ processHome }}" as="p" hint-placeholder-count="5">
-      <div style="background:#FFFFFF;border:1px solid rgba(8,27,58,.06);border-radius:24px;padding:clamp(22px,2.4vw,30px);display:flex;flex-direction:column;gap:14px;box-shadow:0 20px 44px -28px rgba(0,0,0,.5);transition:transform .5s cubic-bezier(.34,1.56,.64,1),box-shadow .5s cubic-bezier(.34,1.56,.64,1)" style-hover="transform:translateY(-12px);box-shadow:0 42px 74px -32px rgba(0,0,0,.55)">
-       <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
-        <span style="display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:12px;background:rgba(79,180,242,.16);border:1px solid rgba(79,180,242,.45);font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:17px;color:#0E4368">{{ p.n }}</span>
-        <span style="width:42px;height:42px;border-radius:12px;background:#E8F4FD;display:grid;place-items:center;color:#0E4368"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+      <div class="reveal-d" style="display:flex;flex-direction:column;gap:14px">
+       <div style="display:flex;align-items:center;gap:12px">
+        <span style="flex:none;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:#081B3A;border:1.5px solid #4FB4F2;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:19px;color:#4FB4F2">{{ p.n }}</span>
+        <sc-if value="{{ p.notLast }}" hint-placeholder-val="{{ true }}">
+         <span style="flex:1;height:2px;background:linear-gradient(90deg,#4FB4F2,rgba(79,180,242,.12))"></span>
+        </sc-if>
        </div>
-       <h3 style="margin:6px 0 0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(19px,2vw,23px);letter-spacing:-.02em;color:#081B3A">{{ p.t }}</h3>
-       <p style="margin:0;color:#4A5363;font-size:14.5px;line-height:1.6">{{ p.d }}</p>
+       <h3 style="margin:6px 0 0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(19px,2vw,24px);letter-spacing:-.02em;color:#F7F4EE">{{ p.t }}</h3>
+       <p style="margin:0;color:#9BA6BD;font-size:14.5px;line-height:1.6">{{ p.d }}</p>
       </div>
      </sc-for>
+    </div>
+   </div>
+  </section>
+
+  <!-- Behind the work, human band -->
+  <section style="max-width:1240px;margin:0 auto;padding:clamp(64px,9vw,120px) clamp(20px,5vw,40px)">
+   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(28px,4vw,56px);align-items:center">
+    <div class="reveal-l" style="display:flex;flex-direction:column;gap:18px;order:1">
+     <span style="{{ eyebrowDark }};align-self:flex-start"><span style="opacity:.6">(05)</span> &nbsp;Behind the work</span>
+     <h2 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(28px,4vw,52px);line-height:1.02;letter-spacing:-.03em">Real people. Real attention. <span style="font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:#4FB4F2">Not a faceless agency.</span></h2>
+     <p style="margin:0;max-width:480px;color:#9BA6BD;font-size:clamp(16px,1.5vw,18px);line-height:1.7">Every project is handled hands-on — you talk directly with the people designing your brand, never passed between account managers. Fewer clients, closer attention, work we're proud to put our name on.</p>
+     <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px">
+      <span style="font-size:13.5px;font-weight:600;color:#E9E5DB;background:rgba(247,244,238,.05);border:1px solid rgba(247,244,238,.12);padding:10px 16px;border-radius:99px">Founder-led</span>
+      <span style="font-size:13.5px;font-weight:600;color:#E9E5DB;background:rgba(247,244,238,.05);border:1px solid rgba(247,244,238,.12);padding:10px 16px;border-radius:99px">Limited slots</span>
+      <span style="font-size:13.5px;font-weight:600;color:#E9E5DB;background:rgba(247,244,238,.05);border:1px solid rgba(247,244,238,.12);padding:10px 16px;border-radius:99px">Direct communication</span>
+     </div>
+    </div>
+    <div class="reveal-r" style="order:2;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(2,clamp(130px,18vw,200px));gap:14px">
+     <div class="clip-rise" style="grid-row:span 2;border-radius:22px;overflow:hidden;border:1px solid rgba(247,244,238,.1)"><img src="https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?w=900&q=80" alt="Founder reviewing brand work with a client" style="width:100%;height:100%;object-fit:cover"></div>
+     <div class="clip-rise" style="border-radius:22px;overflow:hidden;border:1px solid rgba(247,244,238,.1)"><img src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=800&q=80" alt="Designer working on a logo at a desk" style="width:100%;height:100%;object-fit:cover"></div>
+     <div style="border-radius:22px;overflow:hidden;border:1px solid rgba(79,180,242,.4);background:#0E4368;display:flex;flex-direction:column;justify-content:center;padding:22px">
+      <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(30px,4vw,46px);letter-spacing:-.03em;color:#4FB4F2">40+</span>
+      <span style="font-size:13.5px;font-weight:600;color:#C2CCDD;line-height:1.4">brands launched &amp; growing</span>
+     </div>
     </div>
    </div>
   </section>
@@ -224,8 +302,8 @@
   <!-- Packages teaser -->
   <section style="background:radial-gradient(70% 120% at 0% 0%,rgba(13,92,63,.12),transparent 46%),#F7F4EE;color:#081B3A">
    <div style="max-width:1240px;margin:0 auto;padding:clamp(64px,9vw,128px) clamp(20px,5vw,40px)">
-    <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:clamp(36px,4vw,52px);max-width:680px">
-     <span style="{{ eyebrowCream }};align-self:flex-start">Packages</span>
+    <div class="reveal" style="display:flex;flex-direction:column;gap:16px;margin-bottom:clamp(36px,4vw,52px);max-width:680px">
+     <span style="{{ eyebrowCream }};align-self:flex-start"><span style="opacity:.55">(07)</span> &nbsp;Packages</span>
      <h2 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(30px,4.4vw,56px);line-height:1.0;letter-spacing:-.03em;color:#081B3A">One simple price. Everything bundled.</h2>
      <p style="margin:0;color:#4A5363;font-size:clamp(16px,1.5vw,18px);line-height:1.7">Logo, branding, and website support together, so you launch with a complete professional presence, and save versus booking each service separately.</p>
     </div>
@@ -250,8 +328,9 @@
    <div style="position:absolute;inset:0;z-index:0"><img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=1700&q=80" alt="Designer sketching a logo concept on paper" style="width:100%;height:100%;object-fit:cover"></div>
    <div style="position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,#081B3A 0%,rgba(8,27,58,.86) 46%,rgba(8,27,58,.4) 100%)"></div>
    <div style="position:relative;z-index:2;max-width:1240px;margin:0 auto;width:100%;padding:clamp(48px,7vw,96px) clamp(20px,5vw,40px)">
-    <div style="max-width:640px;display:flex;flex-direction:column;gap:22px">
-     <h2 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(32px,5.4vw,72px);line-height:.98;letter-spacing:-.035em">Ready to build a presence customers <span style="font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:#4FB4F2">trust?</span></h2>
+    <div class="reveal-l" style="max-width:640px;display:flex;flex-direction:column;gap:22px">
+     <div class="reveal-l" style="max-width:640px;display:flex;flex-direction:column;gap:22px">
+      <h2 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(32px,5.4vw,72px);line-height:.98;letter-spacing:-.035em">Ready to build a presence customers <span style="font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:#4FB4F2">trust?</span></h2>
      <p style="margin:0;max-width:480px;color:#C2CCDD;font-size:clamp(16px,1.6vw,19px);line-height:1.6">Let's create a logo, brand, and website your customers can trust, without making the process stressful or complicated.</p>
      <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:6px"><a onClick="{{ goContact }}" style="{{ btnPrimaryLg }}">Start your project →</a></div>
     </div>
@@ -276,7 +355,7 @@
   </section>
 
   <section style="max-width:1240px;margin:0 auto;padding:clamp(40px,5vw,72px) clamp(20px,5vw,40px) clamp(24px,3vw,40px)">
-   <div style="border-top:1px solid rgba(247,244,238,.1)">
+   <div class="reveal" style="border-top:1px solid rgba(247,244,238,.1)">
     <sc-for list="{{ servicesList }}" as="s" hint-placeholder-count="5">
      <div style="display:grid;grid-template-columns:auto 1fr auto;gap:clamp(18px,3vw,44px);align-items:start;padding:clamp(26px,3.4vw,44px) 0;border-bottom:1px solid rgba(247,244,238,.1)">
       <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(15px,1.4vw,17px);color:#4FB4F2;padding-top:6px">{{ s.num }}</span>
@@ -370,29 +449,63 @@
   </section>
 
   <section style="max-width:1240px;margin:0 auto;padding:clamp(40px,5vw,64px) clamp(20px,5vw,40px) clamp(64px,8vw,110px)">
-   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:22px">
-    <sc-for list="{{ works }}" as="w" hint-placeholder-count="4">
-     <a href="{{ w.url }}" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;border:1px solid rgba(247,244,238,.1);border-radius:24px;overflow:hidden;display:flex;flex-direction:column;background:#0F2A4E;transition:transform .4s ease,box-shadow .4s ease,border-color .4s ease" style-hover="transform:translateY(-8px);box-shadow:0 40px 70px -34px rgba(0,0,0,.7);border-color:rgba(79,180,242,.5)">
-      <div style="position:relative;height:250px;overflow:hidden">
-       <div style="{{ w.bg }}"></div>
-       <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,27,58,.1),rgba(8,27,58,.78))"></div>
-       <span style="position:absolute;top:16px;left:16px;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:#4FB4F2;color:#081B3A;padding:7px 13px;border-radius:99px">Live website</span>
-       <span style="position:absolute;left:20px;bottom:16px;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:32px;letter-spacing:-.02em;color:#F7F4EE">{{ w.name }}</span>
+
+   <!-- Featured case study -->
+   <a href="{{ featuredWork.url }}" target="_blank" rel="noopener" class="reveal lift" style="text-decoration:none;color:inherit;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:0;border:1px solid rgba(247,244,238,.12);border-radius:28px;overflow:hidden;background:#0F2A4E;margin-bottom:clamp(20px,3vw,28px)" style-hover="border-color:rgba(79,180,242,.55);box-shadow:0 50px 90px -44px rgba(0,0,0,.75)">
+    <div style="position:relative;min-height:clamp(280px,30vw,440px);overflow:hidden">
+     <div class="lift" style="{{ featuredWork.bg }}" style-hover="transform:scale(1.05)"></div>
+     <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,27,58,.15),rgba(8,27,58,.55))"></div>
+     <span style="position:absolute;top:18px;left:18px;display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:#4FB4F2;color:#081B3A;padding:8px 14px;border-radius:99px">★ Featured project</span>
+    </div>
+    <div style="padding:clamp(28px,3.4vw,48px);display:flex;flex-direction:column;gap:18px;justify-content:center">
+     <div style="display:flex;align-items:center;gap:12px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#4FB4F2">{{ featuredWork.type }}<span style="color:#5C6A85">·</span><span style="color:#9BA6BD">{{ featuredWork.year }}</span></div>
+     <h2 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(32px,4.4vw,56px);line-height:.98;letter-spacing:-.03em;color:#F7F4EE">{{ featuredWork.name }}</h2>
+     <p style="margin:0;color:#C2CCDD;font-size:clamp(16px,1.6vw,19px);line-height:1.55;max-width:460px">{{ featuredWork.tagline }}</p>
+     <div style="display:flex;flex-wrap:wrap;gap:28px;margin-top:6px;padding-top:20px;border-top:1px solid rgba(247,244,238,.12)">
+      <div style="display:flex;flex-direction:column;gap:2px">
+       <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(24px,3vw,34px);letter-spacing:-.03em;color:#4FB4F2">{{ featuredWork.metricN }}</span>
+       <span style="font-size:13px;font-weight:600;color:#9BA6BD">{{ featuredWork.metricL }}</span>
       </div>
-      <div style="padding:20px 22px 22px;display:flex;flex-direction:column;gap:7px">
-       <span style="font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#4FB4F2">{{ w.type }}</span>
-       <span style="font-size:15px;font-weight:600;color:#E9E5DB">{{ w.domain }} →</span>
+      <div style="display:flex;flex-direction:column;gap:2px">
+       <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(15px,1.6vw,18px);color:#F7F4EE">{{ featuredWork.outcome }}</span>
+       <span style="font-size:13px;font-weight:600;color:#9BA6BD">delivered</span>
+      </div>
+      <span style="align-self:flex-end;margin-left:auto;font-size:15px;font-weight:700;color:#F7F4EE">{{ featuredWork.domain }} →</span>
+     </div>
+    </div>
+   </a>
+
+   <!-- Rest of the work -->
+   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:clamp(20px,3vw,28px)">
+    <sc-for list="{{ restWorks }}" as="w" hint-placeholder-count="3">
+     <a href="{{ w.url }}" target="_blank" rel="noopener" class="reveal-d lift" style="text-decoration:none;color:inherit;border:1px solid rgba(247,244,238,.1);border-radius:24px;overflow:hidden;display:flex;flex-direction:column;background:#0F2A4E" style-hover="transform:translateY(-10px);box-shadow:0 46px 80px -40px rgba(0,0,0,.72);border-color:rgba(79,180,242,.5)">
+      <div style="position:relative;height:240px;overflow:hidden">
+       <div class="lift" style="{{ w.bg }}" style-hover="transform:scale(1.06)"></div>
+       <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,27,58,.08),rgba(8,27,58,.8))"></div>
+       <span style="position:absolute;top:16px;left:16px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:rgba(8,27,58,.6);backdrop-filter:blur(6px);border:1px solid rgba(247,244,238,.2);color:#F7F4EE;padding:7px 12px;border-radius:99px">{{ w.year }}</span>
+       <div style="position:absolute;left:20px;right:20px;bottom:16px;display:flex;align-items:flex-end;justify-content:space-between;gap:12px">
+        <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:30px;letter-spacing:-.02em;color:#F7F4EE">{{ w.name }}</span>
+        <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:20px;letter-spacing:-.02em;color:#4FB4F2">{{ w.metricN }}</span>
+       </div>
+      </div>
+      <div style="padding:22px;display:flex;flex-direction:column;gap:12px;flex:1">
+       <p style="margin:0;color:#C2CCDD;font-size:15px;line-height:1.5">{{ w.tagline }}</p>
+       <div style="margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:14px;border-top:1px solid rgba(247,244,238,.1)">
+        <span style="font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#4FB4F2">{{ w.outcome }}</span>
+        <span style="font-size:14px;font-weight:600;color:#E9E5DB">{{ w.domain }} →</span>
+       </div>
       </div>
      </a>
     </sc-for>
    </div>
 
-   <div style="margin-top:52px;position:relative;overflow:hidden;border-radius:28px;padding:clamp(40px,5vw,72px) clamp(28px,5vw,56px);background:#0E4368;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px">
-    <div style="flex:1 1 360px;display:flex;flex-direction:column;gap:12px">
-     <h2 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(28px,4vw,52px);line-height:.98;letter-spacing:-.03em;color:#F7F4EE">Want your business featured here next?</h2>
+   <div class="reveal" style="margin-top:52px;position:relative;overflow:hidden;border-radius:28px;padding:clamp(40px,5vw,72px) clamp(28px,5vw,56px);background:#0E4368;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px">
+    <div style="position:absolute;top:-40px;right:-20px;width:160px;height:160px;animation:floaty 8s ease-in-out infinite;opacity:.5;pointer-events:none"><svg viewBox="0 0 100 100" width="100%" height="100%"><path d="M50 4 C54 34 66 46 96 50 C66 54 54 66 50 96 C46 66 34 54 4 50 C34 46 46 34 50 4Z" fill="#4FB4F2"></path></svg></div>
+    <div style="flex:1 1 360px;display:flex;flex-direction:column;gap:12px;position:relative">
+     <h2 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(28px,4vw,52px);line-height:.98;letter-spacing:-.03em;color:#F7F4EE">Want your business featured here <span style="font-family:'Instrument Serif',serif;font-style:italic;font-weight:400">next?</span></h2>
      <p style="margin:0;color:rgba(247,244,238,.82);font-size:17px;font-weight:500">Let's build something worth showing off.</p>
     </div>
-    <a onClick="{{ goContact }}" style="padding:18px 32px;border-radius:99px;background:#4FB4F2;color:#081B3A;font-weight:700;font-size:15.5px;text-decoration:none;white-space:nowrap;cursor:pointer">Start your project →</a>
+    <a onClick="{{ goContact }}" style="position:relative;padding:18px 32px;border-radius:99px;background:#4FB4F2;color:#081B3A;font-weight:700;font-size:15.5px;text-decoration:none;white-space:nowrap;cursor:pointer">Start your project →</a>
    </div>
   </section>
  </div>
@@ -412,12 +525,12 @@
   </section>
 
   <section style="max-width:1240px;margin:0 auto;padding:clamp(48px,6vw,88px) clamp(20px,5vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(32px,5vw,64px);align-items:center">
-   <div style="position:relative;border-radius:26px;overflow:hidden;border:1px solid rgba(247,244,238,.1);background:#0F2A4E">
+   <div class="reveal-l" style="position:relative;border-radius:26px;overflow:hidden;border:1px solid rgba(247,244,238,.1);background:#0F2A4E">
     <img src="https://res.cloudinary.com/dj4e46w8t/image/upload/q_auto/f_auto/v1777295934/Ceo_Coo_Random48_aewmgf.jpg" alt="Kay, founder of Nibi Digital" style="display:block;width:100%;height:auto;object-fit:contain">
     <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(8,27,58,.6))"></div>
     <div style="position:absolute;left:22px;bottom:22px"><span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:22px;color:#F7F4EE">Kay</span><br><span style="font-size:13.5px;color:#C2CCDD;font-weight:500">Founder, Nibi Digital</span></div>
    </div>
-   <div style="display:flex;flex-direction:column;gap:18px">
+   <div class="reveal-r" style="display:flex;flex-direction:column;gap:18px">
     <h2 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(26px,3.6vw,46px);line-height:1.02;letter-spacing:-.03em">Built from real digital business experience.</h2>
     <p style="margin:0;color:#9BA6BD;font-size:16px;line-height:1.75">Nibi Digital was founded by Kay, a serial digital entrepreneur with firsthand experience building brands, growing online platforms, and launching businesses in the digital space.</p>
     <p style="margin:0;color:#9BA6BD;font-size:16px;line-height:1.75">After building multiple brands of her own, Kay understands how important it is for a business to look professional from day one. Your logo, branding, and website are often the first things customers see, and they quickly shape whether someone trusts your business or keeps scrolling.</p>
@@ -472,7 +585,7 @@
    </div>
   </section>
 
-  <section style="max-width:880px;margin:0 auto;padding:clamp(36px,4vw,56px) clamp(20px,5vw,40px) clamp(28px,3vw,40px);display:flex;flex-direction:column;gap:12px">
+  <section style="max-width:880px;margin:0 auto;padding:clamp(36px,4vw,56px) clamp(20px,5vw,40px) clamp(28px,3vw,40px);display:flex;flex-direction:column;gap:12px" class="reveal">
    <sc-for list="{{ faqList }}" as="item" hint-placeholder-count="6">
     <div style="{{ item.rowStyle }}">
      <button onClick="{{ item.onClick }}" style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:14px;background:transparent;border:none;cursor:pointer;padding:22px 24px;text-align:left">
@@ -586,7 +699,7 @@
  <!-- ===== Footer ===== -->
  <footer style="border-top:1px solid rgba(8,27,58,.16);background:#4FB4F2;color:#081B3A">
   <div style="max-width:1240px;margin:0 auto;padding:clamp(20px,3vw,28px) clamp(20px,5vw,40px);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 28px">
-   <div onClick="{{ goHome }}" style="display:flex;align-items:center;gap:10px;cursor:pointer"><svg width="30" height="30" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;flex:none"><rect width="40" height="40" rx="11" fill="#081B3A"></rect><path d="M11.5 11 L15.5 11 L28.5 29 L24.5 29 Z" fill="#F7F4EE"></path><rect x="11.5" y="11" width="4" height="18" rx="2" fill="#4FB4F2"></rect><rect x="24.5" y="11" width="4" height="18" rx="2" fill="#4FB4F2"></rect></svg><span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:18px;letter-spacing:-.02em;color:#081B3A">Nibi Digital</span></div>
+   <div onClick="{{ goHome }}" style="display:flex;align-items:center;gap:10px;cursor:pointer"><svg width="30" height="30" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;flex:none"><path d="M18,34 L40,22 L40,52 L30,58 L40,64 L40,96 L18,84 Z" fill="#081B3A"></path><path d="M30,58 L40,52 L100,22 L100,52 L40,82 Z" fill="#0E4368"></path><path d="M82,30 L100,22 L100,90 L82,98 Z" fill="#081B3A"></path></svg><span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:18px;letter-spacing:-.02em;color:#081B3A">Nibi <span style="font-weight:500;color:rgba(8,27,58,.55)">digital</span></span></div>
    <nav style="display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px">
     <button onClick="{{ goHome }}" style="{{ footLink }}">Home</button>
     <button onClick="{{ goAbout }}" style="{{ footLink }}">About</button>
@@ -661,10 +774,10 @@ class Component extends DCLogic {
   processFlow = ['Inquiry','Consultation','50% deposit','Design','Revisions','Approval & final payment','Delivery'];
 
   works = [
-    { name:'Anitalent', domain:'anitalent.com', url:'https://anitalent.com', type:'Brand & Website', img:'uploads/pasted-1781542845589-0.png' },
-    { name:'Iamkay', domain:'iamkay.co', url:'https://iamkay.co', type:'Personal Brand & Website', img:'uploads/Screenshot 2026-06-15 at 18.02.00.png' },
-    { name:'Innovasol', domain:'innovasolenterprise.com', url:'https://innovasolenterprise.com', type:'Brand & Website', img:'uploads/pasted-1781542961206-0.png' },
-    { name:'Pentrix', domain:'pentrix.com', url:'https://pentrix.com', type:'Brand & Website', img:'uploads/pasted-1781543081442-0.png' },
+    { name:'Anitalent', domain:'anitalent.com', url:'https://anitalent.com', type:'Brand & Website', year:'2025', img:'uploads/pasted-1781542845589-0.png', tagline:'A talent platform that needed to look as ambitious as the people on it.', outcome:'Full brand + booking-ready website', metricN:'3', metricL:'weeks to launch', featured:true },
+    { name:'Iamkay', domain:'iamkay.co', url:'https://iamkay.co', type:'Personal Brand & Website', year:'2025', img:'uploads/Screenshot 2026-06-15 at 18.02.00.png', tagline:'A personal brand built to turn an audience into clients.', outcome:'Identity system + 6-page site', metricN:'1:1', metricL:'founder-led build' },
+    { name:'Innovasol', domain:'innovasolenterprise.com', url:'https://innovasolenterprise.com', type:'Brand & Website', year:'2024', img:'uploads/pasted-1781542961206-0.png', tagline:'An enterprise that needed instant credibility online.', outcome:'Corporate brand + website', metricN:'10+', metricL:'pages delivered' },
+    { name:'Pentrix', domain:'pentrixenergy.com', url:'https://pentrixenergy.com', type:'Brand & Website', year:'2024', img:'uploads/pasted-1781543081442-0.png', tagline:'A tech company brand with a clean, trustworthy presence.', outcome:'Logo, brand kit + website', metricN:'14', metricL:'day turnaround' },
   ];
 
   whoWeServe = ['New businesses launching for the first time','Startups that need a clean digital foundation','Entrepreneurs building a personal or business brand','Service providers who need a professional website','Growing businesses ready to upgrade their branding','Established businesses that need a more polished presence'];
@@ -767,6 +880,8 @@ class Component extends DCLogic {
 
     const marquee = ['Anitalent','Iamkay','Innovasol','Pentrix','Anitalent','Iamkay','Innovasol','Pentrix'];
     const works = this.works.map(w => ({ ...w, bg:`position:absolute;inset:0;background-image:url('${w.img}');background-size:cover;background-position:top center` }));
+    const featuredWork = works.find(w => w.featured) || works[0];
+    const restWorks = works.filter(w => w !== featuredWork);
 
     const f = this.state.form; const err = this.state.err;
 
@@ -777,9 +892,9 @@ class Component extends DCLogic {
       navHomeS:navStyle('home'), navAboutS:navStyle('about'), navServicesS:navStyle('services'), navWorkS:navStyle('work'), navFaqS:navStyle('faq'), navContactS:navStyle('contact'),
       mNavHomeS:mNavStyle('home'), mNavAboutS:mNavStyle('about'), mNavServicesS:mNavStyle('services'), mNavWorkS:mNavStyle('work'), mNavFaqS:mNavStyle('faq'), mNavContactS:mNavStyle('contact'),
       goHome:()=>this.go('home'), goAbout:()=>this.go('about'), goServices:()=>this.go('services'), goWork:()=>this.go('work'), goFaq:()=>this.go('faq'), goContact:()=>this.go('contact'),
-      homeServices, greatFit:this.greatFit, whyUs:this.whyUs, processHome:this.processHome, homePackages, marquee,
+      homeServices, greatFit:this.greatFit, whyUs:this.whyUs, processHome:this.processHome.map((p,i,arr)=>({ ...p, notLast: i < arr.length-1 })), homePackages, marquee,
       servicesList, packages, extras:this.extras, processFlow:this.processFlow,
-      works, whoWeServe:this.whoWeServe, nextSteps:this.nextSteps,
+      works, featuredWork, restWorks, whoWeServe:this.whoWeServe, nextSteps:this.nextSteps,
       faqList,
       fName:f.name, fBusiness:f.business, fEmail:f.email, fPhone:f.phone, fMessage:f.message,
       onName:e=>this.setField('name',e.target.value), onBusiness:e=>this.setField('business',e.target.value), onEmail:e=>this.setField('email',e.target.value), onPhone:e=>this.setField('phone',e.target.value), onMessage:e=>this.setField('message',e.target.value),
